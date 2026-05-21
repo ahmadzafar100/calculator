@@ -23,6 +23,14 @@ const Calculator = () => {
     inputRef.current.placeholder = "0";
     setValue("");
   };
+  const handleChange = (e) => {
+    const input = e.target.value;
+
+    // Allow only digits and +-/*
+    if (/^[0-9+\-/*]*$/.test(input)) {
+      setValue(input);
+    }
+  };
   return (
     <Container className="py-3">
       <Row>
@@ -41,7 +49,13 @@ const Calculator = () => {
                 placeholder="0"
                 className="text-end mb-1 rounded-0"
                 value={value}
-                disabled
+                style={{ caretColor: "transparent" }}
+                onChange={handleChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleCalculate();
+                  }
+                }}
               />
               <Row className="g-1">
                 {num.map((item, key) => (
