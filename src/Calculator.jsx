@@ -10,11 +10,7 @@ const Calculator = () => {
   };
   const handleCalculate = () => {
     try {
-      // Function() evaluates the string as JavaScript code.
-      // If displayValue is "18+2", this returns 20.
       const result = new Function("return " + value)();
-
-      // Convert the result back to a string so we can keep appending to it
       setValue(String(result));
     } catch (error) {
       // Catches invalid math (e.g., if the user types "18++2")
@@ -37,7 +33,7 @@ const Calculator = () => {
                 <strong>Calculator</strong>
               </h3>
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="p-1">
               <Form.Control
                 ref={inputRef}
                 type="text"
