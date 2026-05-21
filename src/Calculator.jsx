@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 
 const Calculator = () => {
@@ -31,6 +31,36 @@ const Calculator = () => {
       setValue(input);
     }
   };
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const key = e.key;
+
+      // Allow digits and operators
+      if (/^[0-9+\-/*]$/.test(key)) {
+        setValue((prev) => prev + key);
+      }
+
+      // Enter key
+      if (key === "Enter") {
+        try {
+          setValue(eval(value).toString());
+        } catch {
+          setValue("Error");
+        }
+      }
+
+      // Backspace
+      if (key === "Backspace") {
+        setValue((prev) => prev.slice(0, -1));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [value]);
   return (
     <Container className="py-3">
       <Row>
